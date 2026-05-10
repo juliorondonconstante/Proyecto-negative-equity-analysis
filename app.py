@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+import streamlit.components.v1 as components
 
 warnings.filterwarnings("ignore")
 
@@ -265,6 +266,32 @@ with col_bottom:
 
 st.markdown("---")
 
+# ── Mapas interactivos ───────────────────
+st.markdown('---')
+st.header('🗺️ Mapas Interactivos')
+
+tab1, tab2 = st.tabs(['Pico histórico por estado', 'Recuperación por estado'])
+
+with tab1:
+    st.subheader('¿Dónde fue más grave la crisis?')
+    st.markdown('Los estados más rojos tuvieron el mayor porcentaje de viviendas con negative equity en su peor momento.')
+    try:
+        with open('mapa_negative_equity.html', 'r', encoding='utf-8') as f:
+            html_mapa1 = f.read()
+        st.components.v1.html(html_mapa1, height=500)
+    except:
+        st.warning('Archivo mapa_negative_equity.html no encontrado')
+
+with tab2:
+    st.subheader('¿Qué estados se recuperaron más?')
+    st.markdown('Los estados más verdes eliminaron mayor porcentaje de negative equity desde su pico hasta 2017.')
+    try:
+        with open('mapa_recuperacion.html', 'r', encoding='utf-8') as f:
+            html_mapa2 = f.read()
+        st.components.v1.html(html_mapa2, height=500)
+    except:
+        st.warning('Archivo mapa_recuperacion.html no encontrado')
+
 # ---------------- INSIGHTS AUTOMÁTICOS ----------------
 st.header("💡 Hallazgos Clave")
 
@@ -278,6 +305,10 @@ con un pico de **{estado_valor:.1%}**.
 ✅ Para 2017 el mercado mostró señales importantes
 de recuperación.
 """)
+
+
+
+
 
 # ---------------- CONCLUSIÓN ----------------
 st.header("📌 Conclusión Ejecutiva")
